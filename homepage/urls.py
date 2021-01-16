@@ -6,16 +6,17 @@ import notifications.urls
 
 # second- truncated request is sent here and a match is searched for in url patterns again
 urlpatterns = [
-    path('', PostListView.as_view(), name='caseygram-home'),
-    path('about/us/', views.aboutUs, name='caseygram-about-us'),
-    path('about/jobs/', views.aboutJobs, name='caseygram-about-jobs'),
-    path('about/', views.redirectAboutView, name='caseygram-about-us-redirect'),
-    path('explore/', ExploreListView.as_view(), name='caseygram-explore'),
+    path('', PostListView.as_view(), name='wildpan-home'),
+    path('about/us/', views.aboutUs, name='wildpan-about-us'),
+    path('about/jobs/', views.aboutJobs, name='wildpan-about-jobs'),
+    path('about/', views.redirectAboutView, name='wildpan-about-us-redirect'),
+    path('explore/', ExploreListView.as_view(), name='wildpan-explore'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
     path('comment/<int:pk>/', CommentCreateView.as_view(), name='comment-form'),
     path('profile/<str:username>/', views.public_profile, name='public-profile'),
+    #path('profile/<str:username>/', views.PublicProfileView.as_view(), name='public-profile'),
     path('post/new/', views.post, name='post-add'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),

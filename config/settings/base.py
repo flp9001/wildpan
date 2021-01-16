@@ -13,16 +13,29 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import django_heroku
 import dj_database_url
+import warnings
+from pathlib import Path
+import environ
+
+
+warnings.filterwarnings("ignore", category=UserWarning, module=r".*environ")
+
+ROOT_DIR = Path(__file__).parents[2]
+APPS_DIR = ROOT_DIR / "apps"
+
+env = environ.Env()
+env.read_env(str(ROOT_DIR / ".env"))
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = ['.caseygram.herokuapp.com']
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS',default=['.wildpan.herokuapp.com', '127.0.0.1'])
 
 
 # Application definition
@@ -55,12 +68,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'caseygram.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [str(APPS_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'caseygram.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -82,7 +95,7 @@ WSGI_APPLICATION = 'caseygram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': str(ROOT_DIR / 'db.sqlite3'),
     }
 }
 
@@ -122,44 +135,36 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = str(ROOT_DIR / 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = str(ROOT_DIR / 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'caseygram-home'
+LOGIN_REDIRECT_URL = 'wildpan-home'
 LOGIN_URL = 'login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+#EMAIL_HOST_USER = env('EMAIL_USER')
+#EMAIL_HOST_PASSWORD = env('EMAIL_PASS')
 
-ADMINS = [('Casey', 'casey.delange@gmail.com')]
+ADMINS = [('Pan', 'pan@wildpan.com')]
 
 
-# DJANGO CASEYGRAM VARIABLES:
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-DEBUG = os.environ.get("DEBUG_VALUE", False)
 
-# for s3
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = env.bool("DEBUG_VALUE", False)
+
+
+
 
 
 # auto sets configs for postgres db on heroku
-django_heroku.settings(locals())
+#django_heroku.settings(locals())

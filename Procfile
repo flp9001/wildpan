@@ -1,1 +1,1 @@
-web: gunicorn caseygram.wsgi
+web: gunicorn config.wsgi

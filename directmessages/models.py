@@ -12,7 +12,7 @@ class Message(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
-        return reverse('caseygram-home')
+        return reverse('wildpan-home')
 
     def save(self, *args, **kwargs):
         super(Message, self).save(*args, **kwargs)

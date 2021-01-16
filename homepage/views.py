@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, PostImage, Comment, Like
 from users.models import Profile, Follower
@@ -216,17 +216,44 @@ class ExploreListView(LoginRequiredMixin, ListView):
         return context
 
 
+
+class PublicProfileView(DetailView):
+    model = User
+    slug_field = 'username'
+    #context_object_name = None
+    slug_url_kwarg = 'username'
+    template_name = 'homepage/public_profile.html'
+
+    def get_context_data(self, obj, *args, **kwargs):
+        context = super(PublicProfileView, self).get_context_data(obj, *args, **kwargs)
+
+        context = {
+            'posts': Post.objects.filter(author__username=obj).order_by('-date_posted'),
+            'username': obj,
+            # obj is now accesible in the html via the variable {{ username }}
+            'followers': Follower.objects.filter(being_followed=obj).exclude(
+                follower=obj),
+            'followees': Follower.objects.filter(follower=obj).exclude(
+                being_followed=obj),
+            'followcheck': Follower.objects.filter(follower=request.user,
+                                                   being_followed=obj),
+        }
+        return context
+
+
 @login_required
 def public_profile(request, username):  # learn how in bookmarks
-    obj = User.objects.get(username=username)  # grabs <username> from url and stores it in obj to  be passed into the context
+    #obj = User.objects.get(username=username)  # grabs <username> from url and stores it in obj to  be passed into the context
+    obj = get_object_or_404(User, username=username)
     context = {
         'posts': Post.objects.filter(author__username=obj).order_by('-date_posted'),
         'username': obj,  # obj is now accesible in the html via the variable {{ username }}
         'followers': Follower.objects.filter(being_followed=obj).exclude(follower=obj),
         'followees': Follower.objects.filter(follower=obj).exclude(being_followed=obj),
         'followcheck': Follower.objects.filter(follower=request.user, being_followed=obj),
+        'title': 'Public-Profile'
     }
-    response = render(request, 'homepage/public_profile.html', context, {'title': 'Public-Profile'})
+    response = render(request, 'homepage/public_profile.html', context,)
     return response
 
 
