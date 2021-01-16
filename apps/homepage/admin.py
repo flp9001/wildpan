@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Post, PostImage, Comment, Like
+
+from .models import Comment
+from .models import Like
+from .models import Post
+from .models import PostImage
 
 
 class PostImageInLine(admin.TabularInline):
