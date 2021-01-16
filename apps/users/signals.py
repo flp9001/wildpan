@@ -41,7 +41,7 @@ def create_follower(sender, instance, created, **kwargs):
 # themselves.
 
 
-@receiver(post_save, sender=User)
+# @receiver(post_save, sender=User)
 def create_objects(sender, instance, created, **kwargs):
     wildpanMainUser = User.objects.get(id=1)
     randomImageArray = [
