@@ -145,6 +145,9 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = str(ROOT_DIR / "media")
 MEDIA_URL = "/media/"
 
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+
+
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "wildpan-home"

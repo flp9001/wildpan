@@ -11,9 +11,10 @@
 
                 {% if p.author.username == f.being_followed.username %}
                     <a href="{% url 'public-profile' p.author.username %}" id="author-link">
-
-                        <img class="rounded-circle article-img" src= "{{ p.author.profile.image.url }}">
+                        <span class="align-middle">
+                        <div class="circle-avatar-list" style="background-image:url({{ p.author.profile.image.url }})"></div>
                         <strong>{{ p.author }}</strong>
+                          </span>
                     </a>
         {% if p.images.count > 1 %}
             <div id="carousel-{{p.id}}" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">

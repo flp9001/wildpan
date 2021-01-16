@@ -2,7 +2,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class='row' id='profile'>
-            <img class="rounded-circle account-img" src="{{ username.profile.image.url }}">
+
+            <div class="circle-avatar" style="background-image:url({{ user.profile.image.url }})"></div>
             <div class="media-body">
                 <h2 class='account-heading'>{{ username }}
                 {% if user == username %}

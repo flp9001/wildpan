@@ -264,3 +264,64 @@ body {
 }
 
 
+
+div.circle-avatar{
+    /* make it responsive */
+
+    width: 150px;
+    height:150px;
+    display:block;
+    /* div height to be the same as width*/
+
+
+    /* make it a cirkle */
+    border-radius:50%;
+
+    /* Centering on image`s center*/
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+
+    /* it makes the clue thing, takes smaller dimention to fill div */
+    background-size: cover;
+
+    /* it is optional, for making this div centered in parent*/
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    }
+
+
+div.circle-avatar-list{
+    /* make it responsive */
+
+    width: 34px;
+    height: 34px;
+    display:block;
+    /* div height to be the same as width*/
+
+
+    /* make it a cirkle */
+    border-radius:50%;
+
+    /* Centering on image`s center*/
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+
+    /* it makes the clue thing, takes smaller dimention to fill div */
+    background-size: cover;
+
+    /* it is optional, for making this div centered in parent*/
+    float: left;
+    height: 34px;
+    width: 34px;
+    margin-right: 5px;
+    margin-bottom: 4px;
+    margin-left: 12px;
+    margin-top: 4px;
+    vertical-align: middle;
+    border-style: none;
+    }

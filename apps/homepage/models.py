@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.utils.text import Truncator
 from notifications.signals import notify
 
+from .upload import UploadToPath
 from apps.users.models import User
 
 # models from my understanding are the location of all the info about your data.
@@ -35,7 +36,10 @@ class Post(models.Model):
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, related_name="images", on_delete=models.CASCADE)
-    modelimage = models.ImageField(upload_to="post_images")
+    modelimage = models.ImageField(upload_to=UploadToPath("post_images"))
+
+    def __str__(self):
+        return f"{self.post}: {self.modelimage}"
 
 
 class Comment(models.Model):
@@ -71,6 +75,9 @@ class Like(models.Model):
     liker = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
     date_created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.liker}: {self.post}"
 
     def save(self, *args, **kwargs):
         super(Like, self).save(*args, **kwargs)
