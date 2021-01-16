@@ -1,5 +1,6 @@
 from .base import *  # noqa
 from .base import env  # noqa
+from .base import ROOT_DIR  # noqa
 
 # django-extensions
 # ------------------------------------------------------------------------------
@@ -13,6 +14,14 @@ DEBUG_TOOLBAR_CONFIG = {
         "DJANGO_DEBUG_TOOLBAR", True
     ),  # disables it
     # '...
+}
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": str(ROOT_DIR / "db.sqlite3"),
+    }
 }
 
 
