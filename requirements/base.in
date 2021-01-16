@@ -49,3 +49,4 @@ sqlparse
 urllib3
 whitenoise
 django-environ
+django-imagefield

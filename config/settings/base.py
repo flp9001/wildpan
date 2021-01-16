@@ -56,6 +56,7 @@ THIRD_PARTY_APPS = [
     "django_extensions",
     "notifications",
     "storages",
+    "imagefield",
 ]
 
 INTERNAL_APPS = [
@@ -167,3 +168,17 @@ DEBUG = env.bool("DEBUG_VALUE", default=False)
 
 # auto sets configs for postgres db on heroku
 # django_heroku.settings(locals())
+
+
+IMAGEFIELD_FORMATS = {
+    # image field path, lowercase
+    "homepage.postimage.modelimage": {
+        "square": ["default", ("crop", (320, 320))],
+        "full": ["default", ("thumbnail", (1080, 1920))],
+    },
+    "users.profile.image": {
+        "thumb": ["default", ("crop", (34, 34))],
+        "square": ["default", ("crop", (150, 150))],
+        "full": ["default", ("thumbnail", (1080, 1080))],
+    },
+}

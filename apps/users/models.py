@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from imagefield.fields import ImageField
 from notifications.signals import notify
 
 from .fields import LowercaseCharField
@@ -27,7 +28,9 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
+    image = ImageField(
+        default="default.jpg", upload_to="profile_pics", auto_add_fields=True
+    )
     bio = models.CharField(max_length=150, blank=True)
     # bio is a field in this Post model. it specifies a class attribute Charfield and represents a database column
     first_name = models.CharField(max_length=30, blank=True)

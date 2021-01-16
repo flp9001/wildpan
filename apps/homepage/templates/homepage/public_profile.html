@@ -3,7 +3,8 @@
 {% block content %}
     <div class='row' id='profile'>
 
-            <div class="circle-avatar" style="background-image:url({{ user.profile.image.url }})"></div>
+
+        <img class="rounded-circle account-img" src="{{ username.profile.image.square }}">
             <div class="media-body">
                 <h2 class='account-heading'>{{ username }}
                 {% if user == username %}
@@ -45,7 +46,7 @@
                 {% for image in p.images.all %}
                     {% if forloop.counter0 == 0 %}
                     <a href="{% url 'post-detail' p.id %}" id="detail-link">
-                        <img class='card-img-top img-fluid' src={{ image.modelimage.url }} alt='images'>
+                        <img class='card-img-top img-fluid' src={{ image.modelimage.square }} alt='images'>
                     </a>
                     {% endif %}
                 {% endfor %}

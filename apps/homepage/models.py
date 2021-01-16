@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import Truncator
+from imagefield.fields import ImageField
 from notifications.signals import notify
 
 from .upload import UploadToPath
@@ -36,7 +37,7 @@ class Post(models.Model):
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, related_name="images", on_delete=models.CASCADE)
-    modelimage = models.ImageField(upload_to=UploadToPath("post_images"))
+    modelimage = ImageField(upload_to=UploadToPath("post_images"), auto_add_fields=True)
 
     def __str__(self):
         return f"{self.post}: {self.modelimage}"
