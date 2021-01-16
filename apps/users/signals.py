@@ -2,8 +2,8 @@ from django.db.models.signals import post_save, pre_delete
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from .models import Profile, Follower
-from homepage.models import Like, Comment, Post, PostImage
-from directmessages.models import Message
+from apps.homepage.models import Like, Comment, Post, PostImage
+from apps.directmessages.models import Message
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
 import random

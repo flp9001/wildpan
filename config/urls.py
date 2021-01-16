@@ -16,17 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from users import views as user_views
+from apps.users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
-from users.forms import CustomAuthForm
+from apps.users.forms import CustomAuthForm
 from django.views.static import serve
+from django.conf import settings
 # http request starts here and tries to match url patterns stopping on first match
 
 urlpatterns = [
-    path('casey/', admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
     path('register/', user_views.register, name='register'),
-    path('messages/', include('directmessages.urls')),
+    path('messages/', include('apps.directmessages.urls')),
     path('profile/edit/', user_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html', authentication_form=CustomAuthForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
@@ -34,7 +35,7 @@ urlpatterns = [
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
-    path('', include('homepage.urls')),
+    path('', include('apps.homepage.urls')),
     path('followuser/', user_views.follow, name='follow-user'),
 
 ]

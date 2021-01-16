@@ -35,16 +35,12 @@ env.read_env(str(ROOT_DIR / ".env"))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS',default=['.wildpan.herokuapp.com', '127.0.0.1'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS',default=['.wildpan.com','.wildpan.herokuapp.com', '127.0.0.1'])
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    'homepage.apps.HomepageConfig',
-    'directmessages.apps.DirectmessagesConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,11 +48,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+]
+
+THIRD_PARTY_APPS = [
+    'crispy_forms',
     'django_unused_media',
     'django_extensions',
     'notifications',
     'storages',
 ]
+
+INTERNAL_APPS = [
+    'apps.homepage.apps.HomepageConfig',
+    'apps.directmessages.apps.DirectmessagesConfig',
+    'apps.users.apps.UsersConfig',
+]
+
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -157,10 +166,10 @@ ADMINS = [('Pan', 'pan@wildpan.com')]
 
 
 
-
+ADMIN_URL = env.str("DJANGO_ADMIN_URL", default="admin/")
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
-DEBUG = env.bool("DEBUG_VALUE", False)
+DEBUG = env.bool("DEBUG_VALUE", default=False)
 
 
 

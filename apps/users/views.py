@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from homepage.models import Post, PostImage
-from users.models import Profile, Follower
+from apps.homepage.models import Post, PostImage
+from apps.users.models import Profile, Follower
 from django.contrib.auth.forms import UserCreationForm  # djangos built in user registration form class that is going to get converted into html
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
